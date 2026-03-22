@@ -13,6 +13,38 @@
 
 ## Arquitetura e Decisões Técnicas
 
+```mermaid
+graph TD
+    Client([Cliente / HTTP]) -->|Request| Delivery
+    
+    subgraph Delivery Layer
+        Delivery[Controllers & ValidationPipe]
+    end
+    
+    Delivery -->|DTOs / Casos de Uso| Application
+    
+    subgraph Application Layer
+        Application[Services / Transactions]
+    end
+    
+    Application -.->|Regras de Negócio| Domain
+    
+    subgraph Domain Layer
+        Domain[Domain Validators: CPF/CNPJ, Farm Area]
+    end
+    
+    Application -->|Persistência| Infrastructure
+    
+    subgraph Infrastructure Layer
+        Infrastructure[PrismaService]
+    end
+    
+    Infrastructure -->|Queries| DB[(PostgreSQL)]
+
+    classDef layer fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    class Delivery,Application,Domain,Infrastructure layer;
+```
+
 Foi adotada a **Arquitetura em Camadas** e princípios de **Domain-Driven Design (DDD)** e **Clean Code**:
 - **Domain Layer**: Validações de CPF/CNPJ (via algorítmo nativo para não depender excessivamente de bibliotecas externas) e de regras de áreas (`farm-area.validator`) isoladas da infraestrutura.
 - **Application Layer**: Serviços acionando os casos de uso sem acoplamento a regras HTTP. A lógicas de transações ficam retidas aqui.
