@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, RequestMethod } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import helmet from 'helmet';
 import { Logger } from 'nestjs-pino';
@@ -17,7 +17,9 @@ async function bootstrap() {
   app.enableCors();
 
   // Prefixo Global
-  app.setGlobalPrefix('api');
+  app.setGlobalPrefix('api', {
+    exclude: [{ path: '/', method: RequestMethod.GET }],
+  });
 
   // Habilita Graceful Shutdown (Tratamento seguro de encerramento de processos em nuvem/Docker)
   app.enableShutdownHooks();

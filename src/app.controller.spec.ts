@@ -15,8 +15,14 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello, Brain.ag! :D"', () => {
-      expect(appController.getHello()).toBe('Hello, Brain.ag! :D');
+    it('should return API info object', () => {
+      expect(appController.getInfo()).toEqual({
+        name: 'Brain Agriculture API',
+        description: 'API para gerenciamento de produtores rurais, propriedades e culturas plantadas.',
+        version: '1.0.0',
+        status: 'online',
+        documentation: '/api/docs',
+      });
     });
   });
 });
