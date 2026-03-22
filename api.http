@@ -1,0 +1,103 @@
+@baseUrl = http://localhost:3001/api
+
+### -------------------------------------------------------------
+### PRODUCERS (Produtores Rurais)
+### -------------------------------------------------------------
+
+### 1. Cadastrar um novo Produtor Rural (Pessoa Física com CPF)
+# Nota: A soma de arableArea e vegetationArea não deve ultrapassar totalArea.
+# @name createProducerCPF
+POST {{baseUrl}}/producers
+Content-Type: application/json
+
+{
+  "document": "61554477050",
+  "documentType": "CPF",
+  "name": "Maria Silva",
+  "farms": [
+    {
+      "name": "Sítio das Flores",
+      "city": "Campinas",
+      "state": "SP",
+      "totalArea": 500,
+      "arableArea": 300,
+      "vegetationArea": 200,
+      "plantedCrops": [
+        {
+          "season": "2023",
+          "cropType": "SOYBEAN"
+        },
+        {
+          "season": "2024",
+          "cropType": "CORN"
+        }
+      ]
+    }
+  ]
+}
+
+
+
+### 2. Cadastrar um novo Produtor Executivo (Pessoa Jurídica com CNPJ)
+# @name createProducerCNPJ
+POST {{baseUrl}}/producers
+Content-Type: application/json
+
+{
+  "document": "35136703000126",
+  "documentType": "CNPJ",
+  "name": "Agropecuária XYZ Ltda",
+  "farms": [
+    {
+      "name": "Fazenda Horizonte",
+      "city": "Sorriso",
+      "state": "MT",
+      "totalArea": 5000,
+      "arableArea": 3500,
+      "vegetationArea": 1000,
+      "plantedCrops": [
+        {
+          "season": "2023",
+          "cropType": "COTTON"
+        },
+        {
+          "season": "2023",
+          "cropType": "SOYBEAN"
+        }
+      ]
+    }
+  ]
+}
+
+
+### 3. Listar todos os produtores cadastrados
+GET {{baseUrl}}/producers
+
+###
+
+### 4. Consultar um produtor específico
+# Substitua o ":id" pelo ID / UUID gerado nos cadastros acima
+GET {{baseUrl}}/producers/INSIRA_O_UUID_AQUI
+
+
+
+### 5. Atualizar nome do Produtor ou as propriedades por completo
+# Nota: Ao enviar as propriedades, elas substituirão as atuais.
+PATCH {{baseUrl}}/producers/INSIRA_O_UUID_AQUI
+Content-Type: application/json
+
+{
+  "name": "Agropecuária XYZ Limitada Atualizada"
+}
+
+### 6. Excluir produtor e fazer cascade delete das fazendas
+DELETE {{baseUrl}}/producers/INSIRA_O_UUID_AQUI
+
+
+
+### -------------------------------------------------------------
+### DASHBOARD
+### -------------------------------------------------------------
+
+### 7. Obter dados totais pro Dashboard
+GET {{baseUrl}}/dashboard
