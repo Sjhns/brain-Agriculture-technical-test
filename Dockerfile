@@ -20,4 +20,4 @@ RUN npm run build
 EXPOSE 3000
 
 # Executa as migrations/sync do script, seed e então sobe o app
-CMD ["sh", "-c", "npx prisma db push && npm run prisma db seed && npm run start:prod"]
+CMD ["sh", "-c", "npx prisma db push && npx prisma db seed && npm run start:prod"]
