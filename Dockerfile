@@ -2,6 +2,8 @@ FROM node:20-alpine
 
 WORKDIR /usr/src/app
 
+RUN apk add --no-cache openssl
+
 # Copia dependencias e o schema
 COPY package*.json ./
 COPY prisma ./prisma/
